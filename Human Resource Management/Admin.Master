@@ -1,0 +1,1036 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin.master.cs" Inherits="Human_Resource_Management.Admin" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Smarthr - Bootstrap Admin Template" />
+    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects" />
+    <meta name="author" content="Dreamguys - Bootstrap Admin Template" />
+    <title>Dashboard - HRMS admin template</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="asset1s/img/favicon.png" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css" />
+    <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
+
+    <!-- Lineawesome CSS -->
+    <link rel="stylesheet" href="assets/css/line-awesome.min.css" />
+    <link rel="stylesheet" href="assets/css/material.css" />
+
+    <!-- Chart CSS -->
+    <link rel="stylesheet" href="assets/plugins/morris/morris.css" />
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet" />
+
+    <%-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Add necessary scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>--%>
+    <!-- Script to toggle sidebar using ClientID for ASP.NET controls -->
+
+
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
+    <!-- jQuery (required for Toastr) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
+
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            // Bind the event handler after the page loads
+            document.getElementById('<%= toggle_btn.ClientID %>').addEventListener('click', function () {
+                var sidebar = document.getElementById('<%= sidebar.ClientID %>');
+                sidebar.classList.toggle('active');
+            });
+        });
+
+        // Rebind events after partial postback (for UpdatePanel scenarios)
+        Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+            document.getElementById('<%= toggle_btn.ClientID %>').addEventListener('click', function () {
+                var sidebar = document.getElementById('<%= sidebar.ClientID %>');
+                sidebar.classList.toggle('active');
+            });
+        });
+    </script>
+    <!-- Language Script -->
+    <script>
+        $(document).ready(function () {
+            // Default language
+            var language = {
+                'en': {
+                    'greeting': 'Hello',
+                    'description': 'This is a simple webpage.'
+                },
+                'fr': {
+                    'greeting': 'Bonjour',
+                    'description': 'Ceci est une page web simple.'
+                },
+                'es': {
+                    'greeting': 'Hola',
+                    'description': 'Esta es una página web simple.'
+                },
+                'de': {
+                    'greeting': 'Hallo',
+                    'description': 'Dies ist eine einfache Webseite.'
+                }
+            };
+
+            // Function to change language
+            function changeLanguage(lang) {
+
+            }
+
+            // Event listener for language selection
+            $('.dropdown-item').click(function () {
+                var lang = $(this).data('lang');
+                changeLanguage(lang);
+            });
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        function updateQuery(id) {
+            $.ajax({
+                type: "POST",
+                url: "UpdateHandler.ashx/UpdateQuery",
+                data: { id: id },
+                success: function (response) {
+                    alert(response.d);
+                },
+                error: function (xhr, status, error) {
+                    alert("Error: " + error);
+                }
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        function upDate(id) {
+            alert('Button clicked with ID: ' + id); // For testing purposes
+        }
+    </script>
+    <style type="text/css">
+        .btnclear {
+            border: none;
+            color: red;
+            outline: none;
+            height: 30px;
+            width: 80px;
+            background-color: transparent;
+            font-size: 14px;
+        }
+
+            .btnclear:hover {
+                background-color: grey;
+                color: black;
+            }
+        /* Decrease font size */
+        .sidebar-vertical a {
+            font-size: 14px; /* Adjust the font size as needed */
+        }
+
+        /* Increase space between icon and link */
+        .sidebar-vertical i {
+            margin-right: 12px; /* Adjust the margin as needed */
+            font-size: 16px; /* Adjust icon size if needed */
+        }
+
+        .dropdown-item i {
+            margin-right: 8px;
+        }
+    </style>
+    <script>
+        $(document).on('click', '#mobile_btn', function () {
+            $wrapper.toggleClass('slide-nav');
+            $('.sidebar-overlay').toggleClass('opened');
+            $('html').addClass('menu-opened');
+            $('#task_window').removeClass('opened');
+            return false;
+        });
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        <div class="header">
+            <!-- Logo -->
+            <div class="header-left">
+                <a href="Admindashboard.aspx" class="logo">
+                    <img src="assets/Images/AdminMasterImages/BTLogo.png" width="80" height="60" alt="Logo">
+                </a>
+                <a href="Admindashboard.aspx" class="logo2">
+                    <img src="assets/Images/AdminMasterImages/BTLogo.png" width="80" height="60" alt="Logo">
+                </a>
+            </div>
+            <!-- /Logo -->
+
+            <a id="toggle_btn" runat="server" href="javascript:void(0);">
+                <span class="bar-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </a>
+
+            <!-- Header Title -->
+            <div class="page-title-box">
+                <h3>Human Resource Management</h3>
+            </div>
+            <!-- /Header Title -->
+
+            <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa-solid fa-bars"></i></a>
+
+            <!-- Header Menu -->
+            <ul class="nav user-menu">
+
+                <!-- Search -->
+                <li class="nav-item">
+                    <div class="top-nav-search">
+                        <a href="javascript:void(0);" class="responsive-search">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </a>
+                        <%--<form action="https://smarthr.dreamstechnologies.com/html/template/search.html">	       
+							<input class="form-control" type="text" placeholder="Search here">
+							<button class="btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+						</form>--%>
+                    </div>
+                </li>
+                <!-- /Search -->
+
+                <!-- Notifications -->
+                <li class="nav-item dropdown">
+                    <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+                        <i class="fa-regular fa-bell"></i><span class="badge rounded-pill">
+                            <asp:Label ID="lblnotoficationcount" runat="server"></asp:Label></span>
+                    </a>
+                    <div class="dropdown-menu notifications">
+                        <div class="topnav-dropdown-header">
+                            <span class="notification-title">Notifications</span>
+                            <a href="javascript:void(0)" class="clear-noti">
+                                <asp:Button ID="btnclearnotify" runat="server" Text="Clear All" OnClick="btnclearnotify_Click" CssClass="btnclear" />
+                            </a>
+                        </div>
+                        <div class="noti-content">
+                            <div id="projectsContainer" runat="server"></div>
+
+                        </div>
+                        <div class="topnav-dropdown-footer">
+                            <a href="activities.html">View all Notifications</a>
+                        </div>
+                    </div>
+                </li>
+                <!-- /Notifications -->
+
+                <!-- Message Notifications -->
+                <li class="nav-item dropdown">
+                    <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+                        <i class="fa-regular fa-comment"></i><span class="badge rounded-pill">8</span>
+                    </a>
+                    <asp:PlaceHolder ID="PlaceHolder1" runat="server" Visible="false"></asp:PlaceHolder>
+                    <asp:Label ID="Label1" runat="server" Visible="false"></asp:Label>
+                    <div class="dropdown-menu notifications">
+
+                        <div class="topnav-dropdown-header">
+                            <span class="notification-title">Messages</span>
+                            <a href="javascript:void(0)" class="clear-noti">Clear All </a>
+                        </div>
+                        <div class="noti-content">
+                            <ul class="notification-list">
+                            </ul>
+                        </div>
+                        <div class="topnav-dropdown-footer">
+                            <a href="chat.html">View all Messages</a>
+                        </div>
+                    </div>
+                </li>
+                <!-- /Message Notifications -->
+
+                <li class="nav-item dropdown has-arrow main-drop">
+                    <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+                        <span class="user-img">
+                            <asp:Image ID="Image1" runat="server" Height="40" Width="40" />
+                            <span class="status online"></span></span>
+                        <span>
+                            <asp:Label ID="lblname" runat="server"></asp:Label></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="Profile.aspx">
+                            <i class="la la-user"></i>My Profile
+                        </a>
+                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                            <i class="la la-cog"></i>Settings
+                        </a>
+                        <a class="dropdown-item" href="Default.aspx">
+                            <i class="la la-sign-out"></i>Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <!-- /Header Menu -->
+
+            <!-- Mobile Menu -->
+            <div class="dropdown mobile-user-menu">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="Profile.aspx">My Profile</a>
+                    <a class="dropdown-item" href="settings.html">Settings</a>
+                    <a class="dropdown-item" href="index.html">Logout</a>
+                </div>
+            </div>
+            <!-- /Mobile Menu -->
+
+        </div>
+        <!-- /Header -->
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar" runat="server">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <nav class="greedys sidebar-horizantal">
+                        <ul class="list-inline-item list-unstyled links">
+                            <li class="menu-title">
+                                <span>Main</span>
+                            </li>
+                            <!--Master-->
+                            <li class="submenu">
+                                <a href="#"><i class="la la-dashboard"></i><span>Master</span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a href="AdminDepartments.aspx"><i class="la la-building"></i>Department</a></li>
+                                    <li><a href="AdminDesignation.aspx"><i class="la la-id-badge"></i>Designation</a></li>
+                                    <li><a href="AdminTimeSheet.aspx"><i class="la la-clock-o"></i>TimeSheet</a></li>
+                                    <li><a href="AdminProjects.aspx"><i class="la la-briefcase"></i>Project Details</a></li>
+                                    <li><a href="AdminShift.aspx"><i class="la la-calendar"></i>Shift & Schedule</a></li>
+                                </ul>
+                            </li>
+                            <!--Master-->
+
+                            <!--Employee Master-->
+                            <li class="submenu">
+                                <a href="#"><i class="la la-cube"></i><span>Employee Master</span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a href="AdminAllEmployees.aspx"><i class="la la-users"></i>All Employees</a></li>
+                                    <li><a href="AdminHolidays.aspx"><i class="la la-umbrella"></i>Holidays</a></li>
+                                    <li><a href="AdminUsers.aspx"><i class="la la-user-plus"></i>Users</a></li>
+                                    <li><a href="AdminAttendance.aspx"><i class="la la-calendar-check-o"></i>Attendance</a></li>
+                                    <li><a href="AdminAddCompanies.aspx"><i class="la la-building-o"></i>Add Companies</a></li>
+                                </ul>
+                            </li>
+                            <!-- Employee Master-->
+
+                            <!--HR-->
+                            <li class="submenu">
+                                <a href="#"><i class="la la-user"></i><span>HR</span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a href="AdminProfile.aspx"><i class="la la-cubes" style="margin-right: 8px; font-size: 14px;"></i>Profile</a></li>
+                                    <li><a href="AdminLeaves.aspx"><i class="la la-calendar" style="margin-right: 8px; font-size: 14px;"></i>Leaves</a></li>
+                                    <li><a href="AdminLeaveBalance.aspx"><i class="la la-balance-scale" style="margin-right: 8px; font-size: 14px;"></i>Leave Balance</a></li>
+                                    <li><a href="AdminOvertime.aspx"><i class="la la-clock-o" style="margin-right: 8px; font-size: 14px;"></i>Overtime</a></li>
+                                    <li><a href="AdminSalary.aspx"><i class="la la-money" style="margin-right: 8px; font-size: 14px;"></i>Employee Salary</a></li>
+                                    <li><a href="AdminSalarySheet.aspx"><i class="la la-file-text-o" style="margin-right: 8px; font-size: 14px;"></i>Attendance Count</a></li>
+                                    <li><a href="AdminPayrollItems.aspx"><i class="la la-list-alt" style="margin-right: 8px; font-size: 14px;"></i>Payroll Items</a></li>
+                                    <li><a href="AdminAttendanceModify.aspx"><i class="la la-pencil-square-o" style="margin-right: 8px; font-size: 14px;"></i>Attendance Modify</a></li>
+                                    <li><a href="AttendanceHistory.aspx"><i class="la la-calculator" style="margin-right: 8px; font-size: 14px;"></i>Attendance History</a></li>
+                                    <li><a href="AdminPerformanceAppraisal.aspx"><i class="la la-line-chart" style="margin-right: 8px; font-size: 14px;"></i>Appraisal</a></li>
+                                    <li><a href="AdminPerformanceIndicator.aspx"><i class="la la-bar-chart" style="margin-right: 8px; font-size: 14px;"></i>Performance Reviews</a></li>
+                                    <%-- <li><a href="AdminProvidentFund.aspx"><i class="la la-piggy-bank" style="margin-right: 8px; font-size: 14px;"></i>Provident Fund</a></li>--%>
+                                    <li><a href="AdminAssets.aspx"><i class="la la-cubes" style="margin-right: 8px; font-size: 14px;"></i>Assets</a></li>
+                                    <li><a href="AdminLoan.aspx"><i class="la la-cubes" style="margin-right: 8px; font-size: 14px;"></i>Loan</a></li>
+                                </ul>
+                            </li>
+                            <!--HR-->
+
+                            <!--Letters-->
+                            <li class="submenu">
+                                <a href="#"><i class="la la-rocket"></i><span>Projects</span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a href="AdminResignation.aspx"><i class="la la-sign-out"></i>Resignation</a></li>
+                                    <li><a href="AdminTermination.aspx"><i class="la la-times-circle"></i>Termination</a></li>
+                                    <li><a href="AdminPromotion.aspx"><i class="la la-bullhorn"></i>Promotion</a></li>
+                                </ul>
+                            </li>
+                            <!--Letters-->
+
+                            <!--Sales-->
+                            <li class="submenu">
+                                <a href="#"><i class="la la-files-o"></i><span>Sales </span><span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a href="AdminChangePassword.aspx"><i class="la la-key"></i>Change Password</a></li>
+                                    <li><a href="AdminLeaveType.aspx"><i class="la la-sitemap"></i>Leave Type</a></li>
+                                    <li><a href="AdminSalarySettings.aspx"><i class="la la-money"></i>Salary Settings</a></li>
+                                    <li><a href="AdminNotificationSettings.aspx"><i class="la la-bell"></i>Notification Settings</a></li>
+                                    <li><a href="AdminApprovalSettings.aspx"><i class="la la-check-circle"></i>Approval Settings</a></li>
+                                </ul>
+                            </li>
+                            <!--Sales-->
+                        </ul>
+                    </nav>
+
+                    <ul class="sidebar-vertical">
+                        <li class="submenu">
+                            <a href="#"><i class="la la-tachometer"></i><span>Master</span> <span class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="AdminDepartments.aspx"><i class="la la-building"></i>Department</a></li>
+                                <li><a href="AdminDesignation.aspx"><i class="la la-id-badge"></i>Designation</a></li>
+                                <li><a href="AdminProjects.aspx"><i class="la la-briefcase"></i>Project Details</a></li>
+                                <li><a href="AdminShift.aspx"><i class="la la-calendar"></i>Shift & Schedule</a></li>
+                                <li><a href="Request.aspx"><i class="la la-calendar"></i>Request</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="submenu">
+                            <a href="#"><i class="la la-calendar-alt"></i><span>Attendance</span> <span class="menu-arrow"></span></a>
+                            <ul>
+
+                                <li><a href="AdminTimeSheet.aspx"><i class="la la-clock-o"></i>TimeSheet</a></li>
+                                <li><a href="AdminAttendance.aspx"><i class="la la-calendar-check-o"></i>Attendance</a></li>
+                                <li><a href="Checkinout.aspx"><i class="la la-clock-o"></i>Check In-Out</a></li>
+                                <li><a href="AdminAttendanceModify.aspx"><i class="la la-pencil-square-o" style="margin-right: 8px; font-size: 14px;"></i>Attendance Modify</a></li>
+                                <li><a href="AttendanceHistory.aspx"><i class="la la-calculator" style="margin-right: 8px; font-size: 14px;"></i>Attendance History</a></li>
+                                <li>
+                                    <a href="#" onclick="showLoadingAndRedirect(); return false;">
+                                        <i class="la la-file-text-o" style="margin-right: 8px; font-size: 14px;"></i>Count / PayRoll
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="submenu">
+                            <a href="#"><i class="la la-users"></i><span>Employee Master</span> <span class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="AdminAllEmployees.aspx"><i class="la la-users"></i>All Employees</a></li>
+                                <li><a href="AdminHolidays.aspx"><i class="la la-umbrella"></i>Holidays</a></li>
+                                <li><a href="AdminUsers.aspx"><i class="la la-user-plus"></i>Users</a></li>
+
+                                <li><a href="AdminAddCompanies.aspx"><i class="la la-building-o"></i>Add Companies</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="submenu">
+                            <a href="#"><i class="la la-briefcase"></i><span>HR</span> <span class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="AdminProfile.aspx"><i class="la la-cubes" style="margin-right: 8px; font-size: 14px;"></i>Profile</a></li>
+                                <li><a href="AdminLeaves.aspx"><i class="la la-calendar" style="margin-right: 8px; font-size: 14px;"></i>Leaves</a></li>
+                                <li><a href="AdminLeaveBalance.aspx"><i class="la la-balance-scale" style="margin-right: 8px; font-size: 14px;"></i>Leave Balance</a></li>
+                                <li><a href="AdminOvertime.aspx"><i class="la la-clock-o" style="margin-right: 8px; font-size: 14px;"></i>Overtime</a></li>
+                                <li><a href="AdminSalary.aspx"><i class="la la-money" style="margin-right: 8px; font-size: 14px;"></i>Employee Salary</a></li>
+                                <li><a href="AdminPayrollItems.aspx"><i class="la la-list-alt" style="margin-right: 8px; font-size: 14px;"></i>Payroll Items</a></li>
+                                <li><a href="AdminPerformanceAppraisal.aspx"><i class="la la-line-chart" style="margin-right: 8px; font-size: 14px;"></i>Appraisal</a></li>
+                                <li><a href="AdminPerformanceIndicator.aspx"><i class="la la-bar-chart" style="margin-right: 8px; font-size: 14px;"></i>Reviews</a></li>
+                                <%--<li><a href="AdminProvidentFund.aspx"><i class="la la-piggy-bank" style="margin-right: 8px; font-size: 14px;"></i>Provident Fund</a></li>--%>
+                                <li><a href="AdminAssets.aspx"><i class="la la-cubes" style="margin-right: 8px; font-size: 14px;"></i>Assets</a></li>
+                                <li><a href="AdminLoan.aspx"><i class="la la-cubes" style="margin-right: 8px; font-size: 14px;"></i>Loan</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="submenu">
+                            <a href="#"><i class="la la-envelope"></i><span>Letters</span> <span class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="AdminResignation.aspx"><i class="la la-sign-out"></i>Resignation</a></li>
+                                <li><a href="AdminTermination.aspx"><i class="la la-times-circle"></i>Termination</a></li>
+                                <li><a href="AdminPromotion.aspx"><i class="la la-bullhorn"></i>Promotion</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="submenu">
+                            <a href="#"><i class="la la-cogs"></i><span>Settings</span> <span class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="AdminChangePassword.aspx"><i class="la la-key"></i>Change Password</a></li>
+                                <li><a href="AdminLeaveType.aspx"><i class="la la-sitemap"></i>Leave Type</a></li>
+                                <li><a href="AdminSalarySettings.aspx"><i class="la la-money"></i>Salary Settings</a></li>
+                                <li><a href="AdminNotificationSettings.aspx"><i class="la la-bell"></i>Notification Settings</a></li>
+                                <li><a href="AdminApprovalSettings.aspx"><i class="la la-check-circle"></i>Approval Settings</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Sidebar End-->
+
+        <!-- Two Col Sidebar -->
+        <div class="two-col-bar" id="two-col-bar">
+            <div class="sidebar sidebar-twocol" id="navbar-nav">
+                <!--sidebar left Start-->
+                <div class="sidebar-left slimscroll">
+                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <a class="nav-link active" id="v-pills-dashboard-tab" title="Dashboard" data-bs-toggle="pill" href="#v-pills-dashboard" role="tab" aria-controls="v-pills-dashboard" aria-selected="true">
+                            <span class="material-icons-outlined">dashboard
+                            </span>
+                            Master
+                        </a>
+                        <a class="nav-link" id="v-pills-apps-tab" title="Apps" data-bs-toggle="pill" href="#v-pills-apps" role="tab" aria-controls="v-pills-apps" aria-selected="false">
+                            <span class="material-icons-outlined">people
+                            </span>
+                            Employee Master
+                        </a>
+                        <a class="nav-link" id="v-pills-employees-tab" title="Employees" data-bs-toggle="pill" href="#v-pills-employees" role="tab" aria-controls="v-pills-employees" aria-selected="false">
+                            <span class="material-icons-outlined">work
+                            </span>
+                            HR
+                        </a>
+                        <a class="nav-link" id="v-pills-clients-tab" title="Clients" data-bs-toggle="pill" href="#v-pills-clients" role="tab" aria-controls="v-pills-clients" aria-selected="false">
+                            <span class="material-icons-outlined">mail
+                            </span>
+                            Letters
+                        </a>
+                        <a class="nav-link" id="v-pills-projects-tab" title="Projects" data-bs-toggle="pill" href="#v-pills-projects" role="tab" aria-controls="v-pills-projects" aria-selected="false">
+                            <span class="material-icons-outlined">settings
+                            </span>
+                            Settings
+                        </a>
+                    </div>
+                </div>
+                <!--Sidebar Left End-->
+
+                <!--Sidebar Right Start-->
+                <div class="sidebar-right">
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <div class="tab-pane fade show active" id="v-pills-dashboard" role="tabpanel" aria-labelledby="v-pills-dashboard-tab">
+                            <p>Master</p>
+                            <ul>
+                                <li><a href="AdminDepartments.aspx">Department</a></li>
+                                <li><a href="AdminDesignation.aspx">Designation</a></li>
+                                <li><a href="AdminTimeSheet.aspx">TimeSheet</a></li>
+                                <li><a href="AdminProjects.aspx">Project Details</a></li>
+                                <li><a href="AdminShift.aspx">Shift & Schedule</a></li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-apps" role="tabpanel" aria-labelledby="v-pills-apps-tab">
+                            <p>Employee Master</p>
+                            <ul>
+                                <li><a href="AdminAllEmployees.aspx">All Employees</a></li>
+                                <li><a href="AdminHolidays.aspx">Holidays</a></li>
+                                <li><a href="AdminUsers.aspx">Users</a></li>
+                                <li><a href="AdminAttendance.aspx">Attendance</a></li>
+                                <li><a href="AdminAddCompanies.aspx">Add Companies</a></li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-employees" role="tabpanel" aria-labelledby="v-pills-employees-tab">
+                            <p>HR</p>
+                            <ul>
+                                <li><a href="AdminProfile.aspx">Profile</a></li>
+                                <li><a href="AdminLeaves.aspx">Leaves</a></li>
+                                <li><a href="AdminLeaveBalance.aspx">LeavesList</a></li>
+                                <li><a href="AdminOvertime.aspx">Overtime</a></li>
+                                <li><a href="AdminSalary.aspx">Employee Salary</a></li>
+                                <li><a href="AdminPayrollItems.aspx">Payroll Items</a></li>
+                                <li><a href="AdminsalarySheet.aspx">Attendance Count</a></li>
+                                <li><a href="AdminAttendanceModify.aspx">Attendance Modify</a></li>
+                                <li><a href="AttendanceHistory.aspx">Attendance History</a></li>
+                                <li><a href="AdminPerformanceAppraisal.aspx">Appraisal</a></li>
+                                <li><a href="AdminPerformanceIndicator.aspx">Performance Reviews</a></li>
+                                <%-- <li><a href="AdminProvidentFund.aspx">Provident Fund</a></li>--%>
+                                <li><a href="AdminAssets.aspx">Assets</a></li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-clients" role="tabpanel" aria-labelledby="v-pills-clients-tab">
+                            <p>Letters</p>
+                            <ul>
+                                <li><a href="AdminResignation.aspx"><i class="la la-sign-out"></i>Resignation</a></li>
+                                <li><a href="AdminTermination.aspx"><i class="la la-times-circle"></i>Termination</a></li>
+                                <li><a href="AdminPromotion.aspx"><i class="la la-bullhorn"></i>Promotion</a></li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-projects" role="tabpanel" aria-labelledby="v-pills-projects-tab">
+                            <p>Settings</p>
+                            <ul>
+                                <li><a href="AdminChangePassword.aspx"><i class="la la-key"></i>Change Password</a></li>
+                                <li><a href="AdminLeaveType.aspx"><i class="la la-sitemap"></i>Leave Type</a></li>
+                                <li><a href="AdminSalarySettings.aspx"><i class="la la-money"></i>Salary Settings</a></li>
+                                <li><a href="AdminNotificationSettings.aspx"><i class="la la-bell"></i>Notification Settings</a></li>
+                                <li><a href="AdminApprovalSettings.aspx"><i class="la la-check-circle"></i>Approval Settings</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--Sidebar Right End -->
+            </div>
+        </div>
+        <!-- /Two Col Sidebar -->
+
+        <!-- Modal Structure -->
+        <div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <%--  <div class="loader"></div>--%>
+                        <p>please wait...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-icon">
+            <span data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas"><i class="las la-cog"></i></span>
+        </div>
+        <div class="offcanvas offcanvas-end border-0 " tabindex="-1" id="theme-settings-offcanvas">
+            <div class="sidebar-headerset">
+                <div class="sidebar-headersets">
+                    <h2>Customizer</h2>
+                    <h3>Customize your overview Page layout</h3>
+                </div>
+                <div class="sidebar-headerclose">
+                    <a data-bs-dismiss="offcanvas" aria-label="Close">
+                        <img src="assets/img/close.png" alt="Close Icon"></a>
+                </div>
+            </div>
+            <div class="offcanvas-body p-0">
+                <div class="h-100">
+                    <%--data-simplebar--%>
+                    <div class="settings-mains">
+                        <div class="layout-head">
+                            <h5>Layout</h5>
+                            <h6>Choose your layout</h6>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-check card-radio p-0">
+                                    <input id="customizer-layout01" name="data-layout" type="radio" value="vertical" class="form-check-input">
+                                    <label class="form-check-label avatar-md w-100" for="customizer-layout01">
+                                        <img src="assets/img/vertical.png" alt="Layout Image">
+                                    </label>
+                                </div>
+                                <h5 class="fs-13 text-center mt-2">Vertical</h5>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-check card-radio p-0">
+                                    <input id="customizer-layout02" name="data-layout" type="radio" value="horizontal" class="form-check-input">
+                                    <label class="form-check-label  avatar-md w-100" for="customizer-layout02">
+                                        <img src="assets/img/horizontal.png" alt="Layout Image">
+                                    </label>
+                                </div>
+                                <h5 class="fs-13 text-center mt-2">Horizontal</h5>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-check card-radio p-0">
+                                    <input id="customizer-layout03" name="data-layout" type="radio" value="twocolumn" class="form-check-input">
+                                    <label class="form-check-label  avatar-md w-100" for="customizer-layout03">
+                                        <img src="assets/img/two-col.png" alt="Layout Image">
+                                    </label>
+                                </div>
+                                <h5 class="fs-13 text-center mt-2">Two Column</h5>
+                            </div>
+                        </div>
+                        <div class="layout-head pt-3">
+                            <h5>Color Scheme</h5>
+                            <h6>Choose Light or Dark Scheme.</h6>
+                        </div>
+                        <div class="colorscheme-cardradio">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-check card-radio p-0">
+                                        <input class="form-check-input" type="radio" name="data-layout-mode" id="layout-mode-orange" value="orange">
+                                        <label class="form-check-label  avatar-md w-100 " for="layout-mode-orange">
+                                            <img src="assets/img/vertical.png" alt="Layout Image">
+                                        </label>
+                                    </div>
+                                    <h5 class="fs-13 text-center mt-2">Orange</h5>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-check card-radio p-0">
+                                        <input class="form-check-input" type="radio" name="data-layout-mode" id="layout-mode-light" value="light">
+                                        <label class="form-check-label  avatar-md w-100" for="layout-mode-light">
+                                            <img src="assets/img/vertical.png" alt="Layout Image">
+                                        </label>
+                                    </div>
+                                    <h5 class="fs-13 text-center mt-2">Light</h5>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-check card-radio dark  p-0 ">
+                                        <input class="form-check-input" type="radio" name="data-layout-mode" id="layout-mode-dark" value="dark">
+                                        <label class="form-check-label avatar-md w-100 " for="layout-mode-dark">
+                                            <img src="assets/img/vertical.png" alt="Layout Image">
+                                        </label>
+                                    </div>
+                                    <h5 class="fs-13 text-center mt-2">Dark</h5>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-check card-radio blue  p-0 ">
+                                        <input class="form-check-input" type="radio" name="data-layout-mode" id="layout-mode-blue" value="blue">
+                                        <label class="form-check-label  avatar-md w-100" for="layout-mode-blue">
+                                            <img src="assets/img/vertical.png" alt="Layout Image">
+                                        </label>
+                                    </div>
+                                    <h5 class="fs-13 text-center mt-2">Blue</h5>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-check card-radio maroon p-0">
+                                        <input class="form-check-input" type="radio" name="data-layout-mode" id="layout-mode-maroon" value="maroon">
+                                        <label class="form-check-label  avatar-md w-100 " for="layout-mode-maroon">
+                                            <img src="assets/img/vertical.png" alt="Layout Image">
+                                        </label>
+                                    </div>
+                                    <h5 class="fs-13 text-center mt-2">Maroon</h5>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-check card-radio purple p-0">
+                                        <input class="form-check-input" type="radio" name="data-layout-mode" id="layout-mode-purple" value="purple">
+                                        <label class="form-check-label  avatar-md w-100 " for="layout-mode-purple">
+                                            <img src="assets/img/vertical.png" alt="Layout Image">
+                                        </label>
+                                    </div>
+                                    <h5 class="fs-13 text-center mt-2">Purple</h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="layout-width">
+                            <div class="layout-head pt-3">
+                                <h5>Layout Width</h5>
+                                <h6>Choose Fluid or Boxed layout.</h6>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-check card-radio p-0">
+                                        <input class="form-check-input" type="radio" name="data-layout-width" id="layout-width-fluid" value="fluid">
+                                        <label class="form-check-label avatar-md w-100" for="layout-width-fluid">
+                                            <img src="assets/img/vertical.png" alt="Layout Image">
+                                        </label>
+                                    </div>
+                                    <h5 class="fs-13 text-center mt-2">Fluid</h5>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-check card-radio p-0 ">
+                                        <input class="form-check-input" type="radio" name="data-layout-width" id="layout-width-boxed" value="boxed">
+                                        <label class="form-check-label avatar-md w-100 px-2" for="layout-width-boxed">
+                                            <img src="assets/img/boxed.png" alt="Layout Image">
+                                        </label>
+                                    </div>
+                                    <h5 class="fs-13 text-center mt-2">Boxed</h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="layout-position">
+                            <div class="layout-head pt-3">
+                                <h5>Layout Position</h5>
+                                <h6>Choose Fixed or Scrollable Layout Position.</h6>
+                            </div>
+                            <div class="btn-group bor-rad-50 overflow-hidden radio" role="group">
+                                <input type="radio" class="btn-check" name="data-layout-position" id="layout-position-fixed" value="fixed">
+                                <label class="btn btn-light w-sm" for="layout-position-fixed">Fixed</label>
+
+                                <input type="radio" class="btn-check" name="data-layout-position" id="layout-position-scrollable" value="scrollable">
+                                <label class="btn btn-light w-sm ms-0" for="layout-position-scrollable">Scrollable</label>
+                            </div>
+                        </div>
+                        <div class="layout-head pt-3">
+                            <h5>Topbar Color</h5>
+                            <h6>Choose Light or Dark Topbar Color.</h6>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-check card-radio  p-0">
+                                    <input class="form-check-input" type="radio" name="data-topbar" id="topbar-color-light" value="light">
+                                    <label class="form-check-label avatar-md w-100" for="topbar-color-light">
+                                        <img src="assets/img/vertical.png" alt="Layout Image">
+                                    </label>
+                                </div>
+                                <h5 class="fs-13 text-center mt-2">Light</h5>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-check card-radio p-0">
+                                    <input class="form-check-input" type="radio" name="data-topbar" id="topbar-color-dark" value="dark">
+                                    <label class="form-check-label  avatar-md w-100" for="topbar-color-dark">
+                                        <img src="assets/img/dark.png" alt="Layout Image">
+                                    </label>
+                                </div>
+                                <h5 class="fs-13 text-center mt-2">Dark</h5>
+                            </div>
+                        </div>
+
+                        <div id="sidebar-size">
+                            <div class="layout-head pt-3">
+                                <h5>Sidebar Size</h5>
+                                <h6>Choose a size of Sidebar.</h6>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-check sidebar-setting card-radio  p-0 ">
+                                        <input class="form-check-input" type="radio" name="data-sidebar-size" id="sidebar-size-default" value="lg">
+                                        <label class="form-check-label avatar-md w-100" for="sidebar-size-default">
+                                            <img src="assets/img/vertical.png" alt="Layout Image">
+                                        </label>
+                                    </div>
+                                    <h5 class="fs-13 text-center mt-2">Default</h5>
+                                </div>
+
+                                <div class="col-4">
+                                    <div class="form-check sidebar-setting card-radio p-0">
+                                        <input class="form-check-input" type="radio" name="data-sidebar-size" id="sidebar-size-compact" value="md">
+                                        <label class="form-check-label  avatar-md w-100" for="sidebar-size-compact">
+                                            <img src="assets/img/compact.png" alt="Layout Image">
+                                        </label>
+                                    </div>
+                                    <h5 class="fs-13 text-center mt-2">Compact</h5>
+                                </div>
+
+                                <div class="col-4">
+                                    <div class="form-check sidebar-setting card-radio p-0 ">
+                                        <input class="form-check-input" type="radio" name="data-sidebar-size" id="sidebar-size-small-hover" value="sm-hover">
+                                        <label class="form-check-label avatar-md w-100" for="sidebar-size-small-hover">
+                                            <img src="assets/img/small-hover.png" alt="Layout Image">
+                                        </label>
+                                    </div>
+                                    <h5 class="fs-13 text-center mt-2">Small Hover View</h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="sidebar-view">
+                            <div class="layout-head pt-3">
+                                <h5>Sidebar View</h5>
+                                <h6>Choose Default or Detached Sidebar view.</h6>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-check sidebar-setting card-radio  p-0">
+                                        <input class="form-check-input" type="radio" name="data-layout-style" id="sidebar-view-default" value="default">
+                                        <label class="form-check-label avatar-md w-100" for="sidebar-view-default">
+                                            <img src="assets/img/compact.png" alt="Layout Image">
+                                        </label>
+                                    </div>
+                                    <h5 class="fs-13 text-center mt-2">Default</h5>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-check sidebar-setting card-radio p-0">
+                                        <input class="form-check-input" type="radio" name="data-layout-style" id="sidebar-view-detached" value="detached">
+                                        <label class="form-check-label  avatar-md w-100" for="sidebar-view-detached">
+                                            <img src="assets/img/detached.png" alt="Layout Image">
+                                        </label>
+                                    </div>
+                                    <h5 class="fs-13 text-center mt-2">Detached</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="sidebar-color">
+                            <div class="layout-head pt-3">
+                                <h5>Sidebar Color</h5>
+                                <h6>Choose a color of Sidebar.</h6>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-check sidebar-setting card-radio p-0" data-bs-toggle="collapse" data-bs-target="#collapseBgGradient.show">
+                                        <input class="form-check-input" type="radio" name="data-sidebar" id="sidebar-color-light" value="light">
+                                        <label class="form-check-label  avatar-md w-100" for="sidebar-color-light">
+                                            <span class="bg-light bg-sidebarcolor"></span>
+                                        </label>
+                                    </div>
+                                    <h5 class="fs-13 text-center mt-2">Light</h5>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-check sidebar-setting card-radio p-0" data-bs-toggle="collapse" data-bs-target="#collapseBgGradient.show">
+                                        <input class="form-check-input" type="radio" name="data-sidebar" id="sidebar-color-dark" value="dark">
+                                        <label class="form-check-label  avatar-md w-100" for="sidebar-color-dark">
+                                            <span class="bg-darks bg-sidebarcolor"></span>
+                                        </label>
+                                    </div>
+                                    <h5 class="fs-13 text-center mt-2">Dark</h5>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-check sidebar-setting card-radio p-0">
+                                        <input class="form-check-input" type="radio" name="data-sidebar" id="sidebar-color-gradient" value="gradient">
+                                        <label class="form-check-label avatar-md w-100" for="sidebar-color-gradient">
+                                            <span class="bg-gradients bg-sidebarcolor"></span>
+                                        </label>
+                                    </div>
+                                    <h5 class="fs-13 text-center mt-2">Gradient</h5>
+                                </div>
+                                <div class="col-4 d-none">
+                                    <button class="btn btn-link avatar-md w-100 p-0 overflow-hidden border collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBgGradient" aria-expanded="false">
+                                        <span class="d-flex gap-1 h-100">
+                                            <span class="flex-shrink-0">
+                                                <span class="bg-vertical-gradient d-flex h-100 flex-column gap-1 p-1">
+                                                    <span class="d-block p-1 px-2 bg-soft-light rounded mb-2"></span>
+                                                    <span class="d-block p-1 px-2 pb-0 bg-soft-light"></span>
+                                                    <span class="d-block p-1 px-2 pb-0 bg-soft-light"></span>
+                                                    <span class="d-block p-1 px-2 pb-0 bg-soft-light"></span>
+                                                </span>
+                                            </span>
+                                            <span class="flex-grow-1">
+                                                <span class="d-flex h-100 flex-column">
+                                                    <span class="bg-light d-block p-1"></span>
+                                                    <span class="bg-light d-block p-1 mt-auto"></span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </button>
+                                    <h5 class="fs-13 text-center mt-2">Gradient</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="offcanvas-footer border-top p-3 text-center">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <button type="button" class="btn btn-light w-100 bor-rad-50" id="reset-layout">Reset</button>
+                    </div>
+                    <%--<div class="col-6"> 
+						<a href="" target="_blank" class="btn btn-primary w-100 bor-rad-50">Buy Now</a> 
+					</div> --%>
+                </div>
+            </div>
+        </div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+    </form>
+    <!-- Modal Structure -->
+    <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="changePasswordForm">
+                        <div class="mb-3">
+                            <label for="oldPassword" class="form-label">Old Password</label>
+                            <input type="password" class="form-control" id="oldPassword" placeholder="Enter old password">
+                        </div>
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label">New Password</label>
+                            <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery -->
+    <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="assets/js/jquery-3.7.1.min.js"></script>
+
+    <!-- Bootstrap Core JS -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Slimscroll JS -->
+    <script src="assets/js/jquery.slimscroll.min.js"></script>
+
+    <!-- Chart JS -->
+    <script src="assets/plugins/morris/morris.min.js"></script>
+    <script src="assets/plugins/raphael/raphael.min.js"></script>
+    <script src="assets/js/chart.js"></script>
+    <script src="assets/js/greedynav.js"></script>
+
+    <!-- Theme Settings JS -->
+    <script src="assets/js/layout.js"></script>
+    <script src="assets/js/theme-settings.js"></script>
+
+    <!-- Custom JS -->
+    <script src="assets/js/app.js"></script>
+
+    <%-- </form>--%>
+
+    <script>
+        function showLoadingAndRedirect() {
+            // Show the modal
+            var myModal = new bootstrap.Modal(document.getElementById('loadingModal'));
+            myModal.show();
+
+            // Redirect after 2 seconds (adjust as needed)
+            setTimeout(function () {
+                window.location.href = 'AdminAttendanceCount.aspx';
+            }, 2000);
+        }
+    </script>
+
+    <script type="text/javascript">
+        var timeoutDuration = 20 * 60 * 1000; // 20 minutes
+        var timeoutWarningDuration = 5 * 60 * 1000; // 5 minutes
+
+        function showTimeoutWarning() {
+            alert('Your session is about to expire. Please save your work.');
+            setTimeout(function () {
+                window.location.href = 'Default.aspx';
+            }, timeoutWarningDuration);
+        }
+
+        function checkSession() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'KeepSessionAlive.aspx', true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    if (xhr.responseText === 'expired') {
+                        showTimeoutWarning();
+                    }
+                }
+            };
+            xhr.send();
+        }
+
+        setInterval(checkSession, timeoutDuration - timeoutWarningDuration);
+    </script>
+    <style type="text/css">
+        .loader {
+            width: 40px;
+            height: 40px;
+            color: #f03355;
+            animation: l4 1.5s infinite cubic-bezier(0.3,1,0,1);
+        }
+
+        @keyframes l4 {
+            50% {
+                width: 60px;
+                height: 60px;
+                transform: rotate(180deg)
+            }
+
+            100% {
+                transform: rotate(360deg)
+            }
+        }
+    </style>
+    <script>
+        document.getElementById('changePasswordForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            var oldPassword = document.getElementById('oldPassword').value;
+            var newPassword = document.getElementById('newPassword').value;
+            var confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (newPassword === confirmPassword) {
+                // Perform the password change operation (e.g., send an AJAX request)
+                console.log("Password changed successfully!");
+
+                // Close the modal after success
+                var changePasswordModal = new bootstrap.Modal(document.getElementById('changePasswordModal'));
+                changePasswordModal.hide();
+            } else {
+                alert("New password and confirm password do not match.");
+            }
+        });
+    </script>
+
+</body>
+
+</html>

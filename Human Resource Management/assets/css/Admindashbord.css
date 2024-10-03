@@ -1,0 +1,303 @@
+﻿
+    /* Absent progress bar styles */
+    progress#progressAbsent {
+        -webkit-appearance: none;
+        height: 8px; /* Decreased height */
+        border-radius: 5px; /* Add border radius */
+        overflow: hidden; /* Ensure the rounded corners are applied properly */
+    }
+
+    /* Webkit-based browsers */
+    progress#progressAbsent::-webkit-progress-bar {
+        background-color: #f3f3f3; /* Background color of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    progress#progressAbsent::-webkit-progress-value {
+        background-color: red; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    /* Firefox */
+    progress#progressAbsent::-moz-progress-bar {
+        background-color: red; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    /* Weeakly Absent progress bar styles */
+    progress#WaeklyAbsentProgrees {
+        -webkit-appearance: none;
+        height: 8px; /* Decreased height */
+        border-radius: 5px; /* Add border radius */
+        overflow: hidden; /* Ensure the rounded corners are applied properly */
+    }
+
+    /* Webkit-based browsers */
+    progress#WaeklyAbsentProgrees::-webkit-progress-bar {
+        background-color: #f3f3f3; /* Background color of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    progress#WaeklyAbsentProgrees::-webkit-progress-value {
+        background-color: red; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    /* Firefox */
+    progress#WaeklyAbsentProgrees::-moz-progress-bar {
+        background-color: red; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    /* Monthly Absent progress bar styles */
+    progress#monthlyAbsentProgrees {
+        -webkit-appearance: none;
+        height: 8px; /* Decreased height */
+        border-radius: 5px; /* Add border radius */
+        overflow: hidden; /* Ensure the rounded corners are applied properly */
+    }
+
+    /* Webkit-based browsers */
+    progress#monthlyAbsentProgrees::-webkit-progress-bar {
+        background-color: #f3f3f3; /* Background color of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    progress#monthlyAbsentProgrees::-webkit-progress-value {
+        background-color: red; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    /* Firefox */
+    progress#monthlyAbsentProgrees::-moz-progress-bar {
+        background-color: red; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    /* present  progress bar styles */
+    progress#presentprogress {
+        -webkit-appearance: none;
+        height: 8px; /* Decreased height */
+        border-radius: 5px; /* Add border radius */
+        overflow: hidden; /* Ensure the rounded corners are applied properly */
+    }
+
+    /* Webkit-based browsers */
+    progress#presentprogress::-webkit-progress-bar {
+        background-color: #f3f3f3; /* Background color of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    progress#presentprogress::-webkit-progress-value {
+        background-color: green; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    /* Firefox */
+    progress#presentprogress::-moz-progress-bar {
+        background-color: green; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    /*Weakly present  progress bar styles */
+    progress#WaeklyPresentProgrees {
+        -webkit-appearance: none;
+        height: 8px; /* Decreased height */
+        border-radius: 5px; /* Add border radius */
+        overflow: hidden; /* Ensure the rounded corners are applied properly */
+    }
+
+    /* Webkit-based browsers */
+    progress#WaeklyPresentProgrees::-webkit-progress-bar {
+        background-color: #f3f3f3; /* Background color of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    progress#WaeklyPresentProgrees::-webkit-progress-value {
+        background-color: green; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    /* Firefox */
+    progress#WaeklyPresentProgrees::-moz-progress-bar {
+        background-color: green; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+
+    /*Monthly present  progress bar styles */
+    progress#monthlyPresentProgrees {
+        -webkit-appearance: none;
+        height: 8px; /* Decreased height */
+        border-radius: 5px; /* Add border radius */
+        overflow: hidden; /* Ensure the rounded corners are applied properly */
+    }
+
+    /* Webkit-based browsers */
+    progress#monthlyPresentProgrees::-webkit-progress-bar {
+        background-color: #f3f3f3; /* Background color of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    progress#monthlyPresentProgrees::-webkit-progress-value {
+        background-color: green; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    /* Firefox */
+    progress#monthlyPresentProgrees::-moz-progress-bar {
+        background-color: green; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    /* latelogins  progress bar styles */
+    progress#progressLate {
+        -webkit-appearance: none;
+        height: 8px; /* Decreased height */
+        border-radius: 5px; /* Add border radius */
+        overflow: hidden; /* Ensure the rounded corners are applied properly */
+    }
+
+    /* Webkit-based browsers */
+    progress#progressLate::-webkit-progress-bar {
+        background-color: #f3f3f3; /* Background color of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    progress#progressLate::-webkit-progress-value {
+        background-color: orange; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    /* Firefox */
+    progress#progressLate::-moz-progress-bar {
+        background-color: orange; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    /*Weakly present  progress bar styles */
+    progress#WaeklyLateLogintProgrees {
+        -webkit-appearance: none;
+        height: 8px; /* Decreased height */
+        border-radius: 5px; /* Add border radius */
+        overflow: hidden; /* Ensure the rounded corners are applied properly */
+    }
+
+    /* Webkit-based browsers */
+    progress#WaeklyLateLogintProgrees::-webkit-progress-bar {
+        background-color: #f3f3f3; /* Background color of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    progress#WaeklyLateLogintProgrees::-webkit-progress-value {
+        background-color: orange; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    /* Firefox */
+    progress#WaeklyLateLogintProgrees::-moz-progress-bar {
+        background-color: orange; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+
+    /*Monthly present  progress bar styles */
+    progress#monthlyLateLoginProgrees {
+        -webkit-appearance: none;
+        height: 8px; /* Decreased height */
+        border-radius: 5px; /* Add border radius */
+        overflow: hidden; /* Ensure the rounded corners are applied properly */
+    }
+
+    /* Webkit-based browsers */
+    progress#monthlyLateLoginProgrees::-webkit-progress-bar {
+        background-color: #f3f3f3; /* Background color of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    progress#monthlyLateLoginProgrees::-webkit-progress-value {
+        background-color: orange; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    /* Firefox */
+    progress#monthlyLateLoginProgrees::-moz-progress-bar {
+        background-color: orange; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    /* Early comes  progress bar styles */
+    progress#progressEarlyComes {
+        -webkit-appearance: none;
+        height: 8px; /* Decreased height */
+        border-radius: 5px; /* Add border radius */
+        overflow: hidden; /* Ensure the rounded corners are applied properly */
+    }
+
+    /* Webkit-based browsers */
+    progress#progressEarlyComes::-webkit-progress-bar {
+        background-color: #f3f3f3; /* Background color of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    progress#progressEarlyComes::-webkit-progress-value {
+        background-color: #cc66ff; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    /* Firefox */
+    progress#progressEarlyComes::-moz-progress-bar {
+        background-color: #cc66ff; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    /*Weakly present  progress bar styles */
+    progress#WaeklyEarlyComesProgrees {
+        -webkit-appearance: none;
+        height: 8px; /* Decreased height */
+        border-radius: 5px; /* Add border radius */
+        overflow: hidden; /* Ensure the rounded corners are applied properly */
+    }
+
+    /* Webkit-based browsers */
+    progress#WaeklyEarlyComesProgrees::-webkit-progress-bar {
+        background-color: #f3f3f3; /* Background color of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    progress#WaeklyEarlyComesProgrees::-webkit-progress-value {
+        background-color: #cc66ff; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    /* Firefox */
+    progress#WaeklyEarlyComesProgrees::-moz-progress-bar {
+        background-color: #cc66ff; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+
+    /*Monthly present  progress bar styles */
+    progress#monthlyEarlyComesProgrees {
+        -webkit-appearance: none;
+        height: 8px; /* Decreased height */
+        border-radius: 5px; /* Add border radius */
+        overflow: hidden; /* Ensure the rounded corners are applied properly */
+    }
+
+    /* Webkit-based browsers */
+    progress#monthlyEarlyComesProgrees::-webkit-progress-bar {
+        background-color: #f3f3f3; /* Background color of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    progress#monthlyEarlyComesProgrees::-webkit-progress-value {
+        background-color: #cc66ff; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
+
+    /* Firefox */
+    progress#monthlyEarlyComesProgrees::-moz-progress-bar {
+        background-color: #cc66ff; /* Color of the filled part of the progress bar */
+        border-radius: 5px; /* Add border radius */
+    }
